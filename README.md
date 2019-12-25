@@ -7,4 +7,4 @@ nRF24L01 is a single chip radio transceiver for the world wide 2.4 - 2.5 GHz ISM
 # nRF24L01 - Pinout
 
 
-![Alt text](https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwiBwbvHrdHmAhV4yzgGHd_CB1QQjRx6BAgBEAQ&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F516788125975836199%2F&psig=AOvVaw20AJL01J-3ZDdsFTsyur8-&ust=1577382362185897?raw=true "Title")
+![nRF24L01 Pinout](https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwiBwbvHrdHmAhV4yzgGHd_CB1QQjRx6BAgBEAQ&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F516788125975836199%2F&psig=AOvVaw20AJL01J-3ZDdsFTsyur8-&ust=1577382362185897)
