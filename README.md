@@ -1,4 +1,4 @@
-# NRF24l01-Low-Power-RF-Communication
+# nRF24L01-Low-Power-RF-Communication
 This repo contains the circuit diagrams and codes for establishing low power RF communication between two Arduinos (UNO-UNO or UNO-Nano) usinfg NRF24L01 Modules.
 
 # nRF24L01
