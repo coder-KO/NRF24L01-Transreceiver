@@ -1,78 +1,39 @@
+/*----- Code for nRF24L01 Transmitter -----*/
 
-
-// SimpleTx - the master or the transmitter
-
+//Including necessary Libraries
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
 
+//Creating an RF24 object
+RF24 radio(7, 8);  // CE, CSN
 
-#define CE_PIN   7
-#define CSN_PIN 8
+//Address for communication between the two modules.
+const byte address[6] = "00001";
+// Frequecny of sending message
+const int frequency = 1000;
 
-const byte slaveAddress[5] = {'C','H','0','0','1'};
+void setup(){
+  Serial.begin(9600);
+  radio.begin();                  // Initializing the nRF module
+  radio.openWritingPipe(address); // Setting the address
+  radio.stopListening();          // Set module as transmitter
 
-
-RF24 radio(CE_PIN, CSN_PIN); // Create a Radio
-
-char dataToSend[10] = "Message 0";
-char txNum = '0';
-
-
-unsigned long currentMillis;
-unsigned long prevMillis;
-unsigned long txIntervalMillis = 1000; // send once per second
-
-
-void setup() {
-
-    Serial.begin(9600);
-
-    Serial.println("SimpleTx Starting");
-
-    radio.begin();
-    radio.setDataRate( RF24_250KBPS );
-    radio.setRetries(3,5); // delay, count
-    radio.openWritingPipe(slaveAddress);
+  Serial.println("nRF24L01 Transmitter starting");
 }
 
-//====================
-
-void loop() {
-    currentMillis = millis();
-    if (currentMillis - prevMillis >= txIntervalMillis) {
-        send();
-        prevMillis = millis();
-    }
-}
-
-//====================
-
-void send() {
-
-    bool rslt;
-    rslt = radio.write( &dataToSend, sizeof(dataToSend) );
-        // Always use sizeof() as it gives the size as the number of bytes.
-        // For example if dataToSend was an int sizeof() would correctly return 2
-
-    Serial.print("Data Sent ");
-    Serial.print(dataToSend);
-    if (rslt) {
-        Serial.println("  Acknowledge received");
-        updateMessage();
-    }
-    else {
-        Serial.println("  Tx failed");
-    }
-}
-
-//================
-
-void updateMessage() {
-        // so you can see that new data is being sent
-    txNum += 1;
-    if (txNum > '9') {
-        txNum = '0';
-    }
-    dataToSend[8] = txNum;
+void loop(){
+  // Generating the message
+  const char message[] = "Hey, This is nRF24L01.!";
+  
+  // Sending the message while checking its status  
+  bool ack = radio.write(&message, sizeof(message));
+  
+  // To check wether or not the message was sent
+  if(ack == true){
+    Serial.println("Message Sent");
+  }else{
+    Serial.println("Message not Sent");
+  }
+  delay(frequency);
 }
