@@ -1,9 +1,9 @@
 # nRF24L01-Transreceiver
-This repo contains the circuit diagrams and codes for establishing low power RF communication between two Arduinos (UNO-UNO or UNO-Nano) usinfg nRF24L01 Modules.
+This repo contains the circuit diagrams and codes for establishing low power RF communication between two Arduinos (UNO-UNO, Nano-Nano or UNO-Nano) usinfg nRF24L01 Modules.
 
 NOTE:
 
-    In the Circuit Diagrams I have used Arduino UNO as Transmitter and Arduino Nano as receiver but in the following 
+    In the Circuit Diagrams I have used Arduino UNO as transmitter and Arduino Nano as receiver but in the following 
     example both can be used interchangebly.
 
 # nRF24L01
