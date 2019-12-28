@@ -1,52 +1,34 @@
-// SimpleRx - the slave or the receiver
+/*----- Code for nRF24L01 Receiver -----*/
 
+//Including necessary Libraries
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
 
-#define CE_PIN   9
-#define CSN_PIN 10
+//Creating an RF24 object
+RF24 radio(7, 8);  // CE, CSN
 
-const byte thisSlaveAddress[5] = {'R','x','A','A','A'};
+//Address for communication between the two modules.
+const byte address[6] = "00001";
 
-RF24 radio(CE_PIN, CSN_PIN);
+void setup(){
+  Serial.begin(9600);
+  radio.begin();                      // Initializing the nRF module
+  radio.openReadingPipe(0, address);  // Setting the address 
+  radio.startListening();             //Set module as receiver
 
-char dataReceived[10]; // this must match dataToSend in the TX
-bool newData = false;
-
-//===========
-
-void setup() {
-
-    Serial.begin(9600);
-
-    Serial.println("SimpleRx Starting");
-    radio.begin();
-    radio.setDataRate( RF24_250KBPS );
-    radio.openReadingPipe(1, thisSlaveAddress);
-    radio.startListening();
+  Serial.println("nRF24L01 Receiver Starting");
 }
 
-//=============
-
-void loop() {
-    getData();
-    showData();
-}
-
-//==============
-
-void getData() {
-    if ( radio.available() ) {
-        radio.read( &dataReceived, sizeof(dataReceived) );
-        newData = true;
-    }
-}
-
-void showData() {
-    if (newData == true) {
-        Serial.print("Data received ");
-        Serial.println(dataReceived);
-        newData = false;
-    }
+void loop(){
+  delay(2000);    // For configuring with the transmitter
+  
+  //Read the data if available in buffer
+  if (radio.available()){
+    char message[32] = {0};
+    radio.read(&message, sizeof(message));
+    Serial.println(message);
+  }else{
+    Serial.println("ERROR :Message not received"); 
+  }
 }
