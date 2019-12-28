@@ -1,18 +1,17 @@
-// Simple program to verify connection between Arduino and nRF24L01+
-//  This program does NOT attempt any communication with another nRF24
+/*----- Program to check the connection between nRF24L01+ and Arduino/ check nRF24L01+ Module -----*/
 
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
-
 #include <printf.h>
 
-#define CE_PIN   7
-#define CSN_PIN 8
+// Be sure that the CE and CSN pins connected by you matches with the ones in the code
+#define CE   7
+#define CSN 8
 
-const byte thisSlaveAddress[5] = {'R','x','A','A','A'};
+const byte thisSlaveAddress[5] = {'C','H','x','0','1'};
 
-RF24 radio(CE_PIN, CSN_PIN);
+RF24 radio(CE, CSN);
 
 char dataReceived[10]; // this must match dataToSend in the TX
 bool newData = false;
@@ -22,25 +21,27 @@ void setup() {
     Serial.begin(9600);
     printf_begin();
 
-    Serial.println("CheckConnection Starting");
     Serial.println();
-    Serial.println("FIRST WITH THE DEFAULT ADDRESSES after power on");
-    Serial.println("  Note that RF24 does NOT reset when Arduino resets - only when power is removed");
-    Serial.println("  If the numbers are mostly 0x00 or 0xff it means that the Arduino is not");
-    Serial.println("     communicating with the nRF24");
+    Serial.println("|==========================================================================|");
+    Serial.println("\t\t\tnRF24L01 Check Starting");
+    Serial.println("|--------------------------------------------------------------------------|");
+    Serial.println("| 1 |  With DEFAULT Addresses                                              |");
+    Serial.println("|--------------------------------------------------------------------------|");
+    Serial.println("IMPORTANT => If the numbers are mostly 0x00 or 0xff\nit indicates some problem in Connection/Module");
     Serial.println();
     radio.begin();
     radio.printDetails();
     Serial.println();
     Serial.println();
-    Serial.println("AND NOW WITH ADDRESS AAAxR  0x41 41 41 78 52   ON P1");
-    Serial.println(" and 250KBPS data rate");
+    Serial.println("|--------------------------------------------------------------------------|");
+    Serial.println("| 2 |  With Addresses AAAxR  0x41 41 41 78 52 on PIPE 1                    |");
+    Serial.println("|--------------------------------------------------------------------------|");
+    Serial.println("Data Rate  :250kbps");
     Serial.println();
     radio.openReadingPipe(1, thisSlaveAddress);
     radio.setDataRate( RF24_250KBPS );
     radio.printDetails();
-    Serial.println();
-    Serial.println();
+    Serial.println("|==========================================================================|");
 }
 
 
